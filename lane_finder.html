@@ -11769,7 +11769,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
@@ -11905,7 +11905,7 @@ div#notebook {
     <span class="k">if</span> <span class="ow">not</span>  <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">right_x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>    
         <span class="n">r_slope</span><span class="p">,</span> <span class="n">r_constant</span> <span class="o">=</span> <span class="n">fit_line</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">right_x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">right_y</span><span class="p">))</span>
     
-    <span class="c1"># y coords are known since they are the vertical boundaries of the region of interest</span>
+    <span class="c1"># y coords at top are the min values(since the image coords are inverted)</span>
     <span class="c1"># get bottom and top coordinates for x on the left lines for correspondong y params</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">l_slope</span><span class="p">)</span> <span class="ow">or</span> <span class="n">l_slope</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
         <span class="n">l_x_bottom</span> <span class="o">=</span> <span class="n">solve_line</span><span class="p">(</span><span class="n">vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">l_slope</span><span class="p">,</span> <span class="n">l_constant</span><span class="p">);</span>
@@ -11933,7 +11933,7 @@ div#notebook {
     
     <span class="n">draw_lines</span><span class="p">(</span><span class="n">line_img</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
     
-    <span class="k">return</span> <span class="n">line_img</span><span class="p">,</span> <span class="n">lines</span>
+    <span class="k">return</span> <span class="n">line_img</span>
 
 <span class="c1"># Python 3 has support for cool math symbols.</span>
 
@@ -11959,7 +11959,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#@param img input rgb image/frame</span>
@@ -11997,7 +11997,7 @@ div#notebook {
     <span class="n">MAX_LINE_GAP</span> <span class="o">=</span> <span class="mi">130</span>    <span class="c1"># maximum gap in pixels between connectable line segments</span>
     
     <span class="c1"># process using hough transform</span>
-    <span class="n">line_img</span><span class="p">,</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">hough_lines</span><span class="p">(</span><span class="n">mask_img</span><span class="p">,</span> <span class="n">RHO</span><span class="p">,</span> <span class="n">THETA</span><span class="p">,</span> <span class="n">THRESHOLD</span><span class="p">,</span> <span class="n">MIN_LINE_LEN</span><span class="p">,</span> <span class="n">MAX_LINE_GAP</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
+    <span class="n">line_img</span> <span class="o">=</span> <span class="n">hough_lines</span><span class="p">(</span><span class="n">mask_img</span><span class="p">,</span> <span class="n">RHO</span><span class="p">,</span> <span class="n">THETA</span><span class="p">,</span> <span class="n">THRESHOLD</span><span class="p">,</span> <span class="n">MIN_LINE_LEN</span><span class="p">,</span> <span class="n">MAX_LINE_GAP</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
     
     <span class="c1"># get weighted line image</span>
     <span class="n">output_img</span> <span class="o">=</span> <span class="n">weighted_img</span><span class="p">(</span><span class="n">line_img</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
@@ -12011,7 +12011,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
@@ -12034,7 +12034,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">process</span><span class="p">(</span><span class="s1">&#39;test_images/&#39;</span><span class="p">)</span>
@@ -21439,7 +21439,7 @@ TkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import everything needed to edit/save/watch video clips</span>
@@ -21454,7 +21454,7 @@ TkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">process_image</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
@@ -21472,7 +21472,7 @@ TkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">white_output</span> <span class="o">=</span> <span class="s1">&#39;results/solidWhiteRight.mp4&#39;</span>
@@ -21517,8 +21517,8 @@ Writing video into results/solidWhiteRight.mp4
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Done writing video in results/solidWhiteRight.mp4 !                    
 Your video is ready !
-CPU times: user 2.08 s, sys: 582 ms, total: 2.66 s
-Wall time: 2.64 s
+CPU times: user 2.11 s, sys: 569 ms, total: 2.68 s
+Wall time: 2.7 s
 </pre>
 </div>
 </div>
@@ -21529,7 +21529,7 @@ Wall time: 2.64 s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
@@ -21547,7 +21547,7 @@ Wall time: 2.64 s
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[60]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[75]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
@@ -21565,7 +21565,7 @@ Wall time: 2.64 s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">yellow_output</span> <span class="o">=</span> <span class="s1">&#39;results/solidYellowLeft.mp4&#39;</span>
@@ -21610,8 +21610,8 @@ Writing video into results/solidYellowLeft.mp4
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Done writing video in results/solidYellowLeft.mp4 !                    
 Your video is ready !
-CPU times: user 6.85 s, sys: 1.66 s, total: 8.51 s
-Wall time: 7.97 s
+CPU times: user 6.58 s, sys: 1.59 s, total: 8.18 s
+Wall time: 7.58 s
 </pre>
 </div>
 </div>
@@ -21622,7 +21622,7 @@ Wall time: 7.97 s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[561]:</div>
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
@@ -21640,7 +21640,7 @@ Wall time: 7.97 s
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[561]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[77]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
@@ -21658,7 +21658,7 @@ Wall time: 7.97 s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">challenge_output</span> <span class="o">=</span> <span class="s1">&#39;results/challenge.mp4&#39;</span>
@@ -21701,7 +21701,7 @@ Writing video into results/challenge.mp4
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>|####------| 98/243  40% [elapsed: 00:01 left: 00:01, 96.88 iters/sec] </pre>
+<pre>|####------| 98/243  40% [elapsed: 00:01 left: 00:01, 97.24 iters/sec] </pre>
 </div>
 </div>
 
@@ -21714,12 +21714,12 @@ Writing video into results/challenge.mp4
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>|#########-| 227/243  93% [elapsed: 00:02 left: 00:00, 89.90 iters/sec]Warning: in file test_videos/challenge.mp4, 1244160 bytes wanted but 0 bytes read,at frame 251/253, at time 10.04/10.11 sec. Using the last valid frame instead.
+<pre>|#########-| 229/243  94% [elapsed: 00:02 left: 00:00, 90.90 iters/sec]Warning: in file test_videos/challenge.mp4, 1244160 bytes wanted but 0 bytes read,at frame 251/253, at time 10.04/10.11 sec. Using the last valid frame instead.
 Warning: in file test_videos/challenge.mp4, 1244160 bytes wanted but 0 bytes read,at frame 252/253, at time 10.08/10.11 sec. Using the last valid frame instead.
 Done writing video in results/challenge.mp4 !                          
 Your video is ready !
-CPU times: user 2.54 s, sys: 674 ms, total: 3.21 s
-Wall time: 2.99 s
+CPU times: user 2.51 s, sys: 663 ms, total: 3.18 s
+Wall time: 2.96 s
 </pre>
 </div>
 </div>
@@ -21730,7 +21730,7 @@ Wall time: 2.99 s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
@@ -21748,7 +21748,7 @@ Wall time: 2.99 s
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[63]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[79]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
