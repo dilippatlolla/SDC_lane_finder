@@ -42,11 +42,11 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 4. Also, during the separation of lines based on the of the slope, the minimum y coordinate(min_y) among all the lines is computed, for both lines. Here we are computing the minimum as we are working with origin at top left.
 5. Once the lines are separated the group of lines on each side are used to fit a line based on a condition that there is at least one line in the group of lines. The line fitting functionality is implemented in fit_line() method, which uses simple linear regression.
 The line for a simple linear regression model can be written as: y = mx + b, where m is the slope of the line and b is the y-intercept. The y-intercept of this line is the value of y at the point where the line crosses the y axis. The fit_line() method solves for m and b. Once these are known, we can use this equation to estimate output values for x given new input examples of y. the two values of y for which corresponding x values is computed are the y_bottom = edge of image boundary(image height) and y_top = min_y. This is done on both left and right lane lines to get a single line coordinates(x_bottom, y_bottom, x_top and y_top).
-6. The drawback with above process was that there were some unwanted lines that are being detected by hough transform. In the images 1 and 2 below, the line circled in yellow is being detected and based on its positive slope its being grouped into right lane lines. The line fit for the line end points is being pulled to the left to compensate. this has been noted in couple other frames in solidYellowLeft and challenge videos
+6. The drawback with above process was that there were some unwanted lines that are being detected by hough transform. In the images 1 and 2 below, the line circled in green is being detected, and based on its positive slope its being grouped into right lane lines. The line fit for the points is being pulled to the left to compensate. this has been noted in couple other frames in solidYellowLeft and challenge videos
 
-    ![Image 1](first_pass_bad/bad_result_1.png)
+    ![Image 1](first_pass_bad/bad_result_1.jpg)
 
-    ![Image 2](first_pass_bad/bad_result_2.png)
+    ![Image 2](first_pass_bad/bad_result_2.jpg)
 
 7. To eliminate such unwanted lines creeping into final group of lines, I have created a simple list of slope ranges. So during the parsing of the lines, the lines that are separated for further processing are checked to see if their slope is within the range for left and right lanes respectively.
 
@@ -55,7 +55,7 @@ The line for a simple linear regression model can be written as: y = mx + b, whe
 
 8. The use of the slope range filtered out the line that were being detected across the road(parallel to the base of the image). For the same frame as Image 2 above, the good result is shown below.
 
-    ![Image 3](first_pass_bad/good_result_2.png)
+    ![Image 3](first_pass_bad/good_result_2.jpg)
 
 
 ### 3. Potential shortcomings with current pipeline
@@ -66,11 +66,14 @@ The current ROI polygon dimensions and position have been based on the current s
 
 ##### Curved lanes
 
-The current linear regression fits a straight line through given points. But this does not work good in case where the driver is passing through a turn.
+The current linear regression fits a straight line through given points. But this does not work good in case where the driver is passing through a turn, as it leads to converging lane lines as shown in image below.
 
+![Image 3](first_pass_bad/bad_result_3.jpg)
 
-Another shortcoming could be ...
+##### Road Condition
+The implementation cannot filter out unwanted lines that fall within the slope range, since the slope range is currently hardcoded and thus remains the same for every dataset to be tested. In the image below there is a line detected due to change in color of the road. Its the beginning of the bridge in this case. This line falls within the ROI and is thus appended to the left lane lines list. Again the line fit is distorted to compensate for points of this line across the road.
 
+![Image 3](first_pass_bad/bad_result_4.jpg)
 
 ### 4. Suggest possible improvements to your pipeline
 
@@ -83,5 +86,8 @@ The current ROI polygon is based proportional to the image/frame width and heigh
 
 The equation y = mx + b is a first degree polynomial equation. We can increase the order of the equation is increased to a second degree polynomial eq. y = a(x)^2 + bx + c
 One can test 2nd , 3rd or beyond polynomial regression to see how the lanes detected look. Since this project required straight line , I have limited the results to use 1st degree equation only.
+
+##### Invariant to Road Conditions
+The filtering of lines in draw_lines() method need to be updated to filter unwanted line that crop up due to change in road condition. The ROI polygon might have to be modified to not cover the middle section of region between the lanes.
 
 Another potential improvement could be to ...
