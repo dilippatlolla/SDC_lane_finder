@@ -41,7 +41,10 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 3. Since the origin(0,0) of the image start at top left, the lines on the left lane have a negative slope, and vice versa for the lines on the right lane. Thus the lines are separated into two lists of left and right lane lines.
 4. Also, during the separation of lines based on the of the slope, the minimum y coordinate(min_y) among all the lines is computed, for both lines. Here we are computing the minimum as we are working with origin at top left.
 5. Once the lines are separated the group of lines on each side are used to fit a line based on a condition that there is at least one line in the group of lines. The line fitting functionality is implemented in fit_line() method, which uses simple linear regression.
-The line for a simple linear regression model can be written as: y = mx + b, where m is the slope of the line and b is the y-intercept. The y-intercept of this line is the value of y at the point where the line crosses the y axis. The fit_line() method solves for m and b. Once these are known, we can use this equation to estimate output values for x given new input examples of y. the two values of y for which corresponding x values is computed are the y_bottom = edge of image boundary(image height) and y_top = min_y. This is done on both left and right lane lines to get a single line coordinates(x_bottom, y_bottom, x_top and y_top).
+The line for a simple linear regression model can be written as:
+        y = mx + b
+        where m is the slope of the line and b is the y-intercept.
+The y-intercept of this line is the value of y at the point where the line crosses the y axis. The fit_line() method solves for m and b. Once these are known, we can use this equation to estimate output values for x given new input examples of y. the two values of y for which corresponding x values is computed are the y_bottom = edge of image boundary(image height) and y_top = min_y. This is done on both left and right lane lines to get a single line coordinates(x_bottom, y_bottom, x_top and y_top).
 6. The drawback with above process was that there were some unwanted lines that are being detected by hough transform. In the images 1 and 2 below, the line circled in green is being detected, and based on its positive slope its being grouped into right lane lines. The line fit for the points is being pulled to the left to compensate. this has been noted in couple other frames in solidYellowLeft and challenge videos
 
     ![Image 1](first_pass_bad/bad_result_1.jpg)
@@ -84,7 +87,12 @@ The current ROI polygon is based proportional to the image/frame width and heigh
 
 ##### Higher order curve fitting methods
 
-The equation y = mx + b is a first degree polynomial equation. We can increase the order of the equation is increased to a second degree polynomial eq. y = a(x)^2 + bx + c
+The equation
+
+    y = mx + b
+is a first degree polynomial equation. We can increase the order of the equation is increased to a second degree polynomial eq.
+
+    y = a(x)^2 + bx + c
 One can test 2nd , 3rd or beyond polynomial regression to see how the lanes detected look. Since this project required straight line , I have limited the results to use 1st degree equation only.
 
 ##### Invariant to Road Conditions
